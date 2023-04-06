@@ -1,20 +1,26 @@
 import React from 'react';
+import TodoItem from './TodoItem';
 
-const TodoItem = ({ todo, deleteTodo, completeTodo }) => {
-    const handleTodoComplete = () => {
-        completeTodo(todo.id);
-    };
-
-    const handleTodoDelete = () => {
-        deleteTodo(todo.id);
-    };
-
+const TodoList = ({ todos, deleteTodo, completeTodo }) => {
     return (
-        <li className={todo.completed ? 'completed' : ''}>
-            <span onClick={handleTodoComplete}>{todo.text}</span>
-            <button onClick={handleTodoDelete}>X</button>
-        </li>
+        <ul className="TodoList">
+            {todos.map(todo => (
+                
+                // For each todo, we pass the following props to the `TodoItem` component:
+                // - `key` is a unique identifier for React to keep track of each item.
+                // - `todo` is the todo object itself.
+                // - `deleteTodo` is the `deleteTodo` function passed as a prop to this component.
+                // - `completeTodo` is the `completeTodo` function passed as a prop to this component.
+
+                <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    deleteTodo={deleteTodo}
+                    completeTodo={completeTodo}
+                />
+            ))}
+        </ul>
     );
 };
 
-export default TodoItem;
+export default TodoList;
