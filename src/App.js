@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
+import TodoItem from './components/TodoItem';
 
+// - Use the following hooks: useCallback, useContext, useState, useEffect, useMemo
+// - Create a custom hook and use it.
 const App = () => {
 
     // Initialize todos as an empty array using useState

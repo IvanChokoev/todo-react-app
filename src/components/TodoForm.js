@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
+import db from '../firebase';
 
-// Create a functional component named TodoForm that receives an 'addTodo' prop
-const TodoForm = ({ addTodo }) => {
-    const [newTodo, setNewTodo] = useState('');
+const TodoForm = () => {
+    const [text, setText] = useState('');
 
-    // Define a function named 'handleTodoAdd' that will 
-    //add a new todo item when the 'Add' button is clicked
-    const handleTodoAdd = () => {
-        if (newTodo.trim() === '') return;
-        addTodo(
-            { id: Date.now(), text: newTodo, completed: false }
-            );
-        setNewTodo('');
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        if (text.trim () !== ''){
+            const todoRef = db.ref('todos').push();
+            todoRef.set({
+                text,
+                completed:false,
+            });
+            setText('');
+        }
     };
 
-    return (
-        <div className="TodoForm">
+    return(
+        <form onSubmit={handleSubmit}>
             <input
-                type="text"
-                placeholder="Add new todo"
-                value={newTodo}
-                onChange={e => setNewTodo(e.target.value)}
+            type = "text"
+            value = {text}
+            onChange = { (event) => setText(event.target.value) }
+            placeholder = "Enter a todo item" 
             />
-            <button onClick={handleTodoAdd}>Add</button>
-        </div>
-    );
-};
+<button type = "submit">Add</button>
+        </form>
+    )
+}
 
 export default TodoForm;

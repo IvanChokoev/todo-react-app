@@ -1,24 +1,24 @@
 import React from 'react';
+import db from '../firebase';
 
-// todo prop -> contains information about the todo item to be displayed.
-// deleteTodo prop -> removes a todo item from the list when called.
-// completeTodo prop -> marks a todo item as complete when called.
-
-// This function marks a todo item as complete by calling the completeTodo prop with the todo item's id.
-const TodoItem = ({ todo, deleteTodo, completeTodo }) => {
-    const handleTodoComplete = () => {
-        completeTodo(todo.id);
+const TodoItem =({ todo }) => {
+    const handleToggle = () => {
+        const todoRef = db.ref('todos/${todo.id}');
+        todoRef.update({
+            completed: !todo.completed,
+        });
     };
 
-    // This function removes a todo item by calling the deleteTodo prop with the todo item's id.
-    const handleTodoDelete = () => {
-        deleteTodo(todo.id);
+    const handleDelete = () => {
+        const todoRef = db.ref('todos/${todo.id}');
+        todoRef.remove();
     };
 
     return (
-        <li className={todo.completed ? 'completed' : ''}>
-            <span onClick={handleTodoComplete}>{todo.text}</span>
-            <button onClick={handleTodoDelete}>X</button>
+        <li className = {todo.completed ? 'completed' : ''}>
+            <input type="checkbox" checked={todo.completed} onChange={handleToggle} />
+            <span>{todo.text}</span>
+            <button onClick={handleDelete}>Delete</button>
         </li>
     );
 };
