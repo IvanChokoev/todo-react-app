@@ -7,27 +7,29 @@ const TodoForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (text.trim () !== ''){
+        if (text.trim() !== '') {
             const todoRef = db.ref('todos').push();
             todoRef.set({
                 text,
-                completed:false,
+                completed: false,
             });
             setText('');
         }
     };
 
-    return(
+    console.log('New todo added:', text);
+
+    return (
         <form onSubmit={handleSubmit}>
             <input
-            type = "text"
-            value = {text}
-            onChange = { (event) => setText(event.target.value) }
-            placeholder = "Enter a todo item" 
+                type="text"
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+                placeholder="Enter a todo item"
             />
-<button type = "submit">Add</button>
+            <button type="submit">Add</button>
         </form>
-    )
-}
+    );
+};
 
 export default TodoForm;

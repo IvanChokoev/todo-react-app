@@ -1,0 +1,72 @@
+body {
+    background-color: #f1f1f1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 50px;
+}
+
+.TodoForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.TodoForm input[type=text] {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+}
+
+.TodoForm button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    margin-left: 10px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.TodoList {
+    margin-top: 30px;
+}
+
+.TodoList li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.TodoList li.completed {
+    background-color: #d3d3d3;
+    text-decoration: line-through;
+}
+
+.TodoList li span {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.TodoList li button {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f00;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}

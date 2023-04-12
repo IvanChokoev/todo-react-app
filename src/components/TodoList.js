@@ -13,10 +13,13 @@ const TodoList = () => {
             for (let id in todos) {
                 todoList.push({ id, ...todos[id] });
             }
-
             setTodos(todoList);
+
+            console.log('Todo list updated:', todoList);
         });
     }, []);
+
+    console.log('todos:', todos);
 
     return (
         <ul>
@@ -25,6 +28,6 @@ const TodoList = () => {
             ))}
         </ul>
     );
-};
+}
 
 export default TodoList;
