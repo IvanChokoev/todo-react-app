@@ -1,10 +1,19 @@
-import React, {useState, useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import TodoItem from './TodoItem';
 import db from '../firebase';
+import { useTodoContext } from './TodoContext';
+
 
 const TodoList = () => {
-    const[todos, setTodos] = useState([]);
+    const { todos, setTodos } = useTodoContext();
 
+    //useMemo is used to filter the todos array and return a new array containing only the incomplete todos.
+    //optimize performance by reducing unnecessary re-renders
+    const memorizedTodos = useMemo(() => {
+        return todos.filter(todo => !todo.completed);
+    }, [todos]);
+
+    // useeffect to fetch data from an API
     useEffect(() => {
         const todosRef = db.ref('todos');
         todosRef.on('value', (snapshot) => {
@@ -17,17 +26,17 @@ const TodoList = () => {
 
             console.log('Todo list updated:', todoList);
         });
-    }, []);
+    }, [setTodos]);
 
     console.log('todos:', todos);
 
     return (
         <ul>
-            {todos.map((todo) => (
+            {memorizedTodos.map((todo) => (
                 <TodoItem key={todo.id} todo={todo} />
             ))}
         </ul>
     );
-}
+};
 
 export default TodoList;

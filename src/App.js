@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
-import TodoItem from './components/TodoItem';
+import { TodoProvider } from './components/TodoContext';
 
 // - Use the following hooks: useCallback, useContext, useState, useEffect, useMemo
 // - Create a custom hook and use it.
@@ -32,6 +32,7 @@ const App = () => {
 
     // Render the App component with TodoForm and TodoList components
   return (
+    <TodoProvider>
     <div className="App">
       <h1>Todo List</h1>
       <TodoForm addTodo={handleTodoAdd} />
@@ -41,6 +42,7 @@ const App = () => {
         completeTodo={handleTodoComplete}
       />
     </div>
+    </TodoProvider>
   );
 };
 
