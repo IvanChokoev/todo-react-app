@@ -2,7 +2,6 @@
 //creates a centralized location for storing and manipulating Todo data which can be easily accessed and updated by any component in the app.
 
 // useContext allows you to consume a context value from a parent component without the need to pass down props to every level of child components
-
 import React, { createContext, useState, useContext, ReactNode, FC } from 'react';
 
 // Define the shape of a todo item
