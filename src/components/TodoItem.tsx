@@ -12,6 +12,7 @@ interface Props {
 const TodoItem: React.FC<Props> = ({ todo }) => {
     // Update the "completed" field of the todo in Firebase
     const handleToggle = () => {
+    // Get a reference to the todo in Firebase
         const todoRef = db.ref(`todos/${todo.id}`);
         todoRef.update({
             completed: !todo.completed,
