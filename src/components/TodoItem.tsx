@@ -1,7 +1,16 @@
 import React from 'react';
 import db from '../firebase';
 
-const TodoItem = ({ todo }) => {
+interface Props {
+    todo: {
+        id: string,
+        text: string,
+        completed: boolean
+    }
+}
+
+const TodoItem: React.FC<Props> = ({ todo }) => {
+    // Update the "completed" field of the todo in Firebase
     const handleToggle = () => {
         const todoRef = db.ref(`todos/${todo.id}`);
         todoRef.update({
@@ -9,6 +18,7 @@ const TodoItem = ({ todo }) => {
         });
     };
 
+    // Remove the todo from Firebase
     const handleDelete = () => {
         const todoRef = db.ref(`todos/${todo.id}`);
         todoRef.remove();
