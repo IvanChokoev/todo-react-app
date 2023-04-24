@@ -1,26 +1,34 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import './App.css';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
-import { TodoProvider, useTodoContext } from './components/TodoContext'; // import the custom hook and the context
-import React, { useState } from 'react';
+import { Todo, TodoProvider, useTodoContext } from './components/TodoContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import React from 'react';
+
+// Create a new instance of the QueryClient
+const queryClient = new QueryClient();
 
 const App = () => {
   // Use the custom hook to access the todos, setTodos, addTodo, and toggleTodo functions from the context
   const { todos, setTodos, addTodo, toggleTodo } = useTodoContext();
-  
+
   // Use useState to control whether the completed todos should be shown or hidden
   const [showCompleted, setShowCompleted] = useState(false);
 
+  // function for adding a new todo with useCallback
   const handleTodoAdd = useCallback((text: string) => {
     addTodo(text);
   }, [addTodo]);
 
+  // callback function for deleting a todo
   const handleTodoDelete = useCallback((todoId: string) => {
     // Use setTodos to update the todos array by filtering out the todo with the specified ID
     setTodos(todos.filter((todo) => todo.id !== todoId));
   }, [setTodos, todos]);
 
+  // callback function for completing a todo
   const handleTodoComplete = useCallback((todoId: string) => {
     // Use toggleTodo to update the completed status of the todo with the specified ID
     toggleTodo(todoId);
@@ -29,30 +37,33 @@ const App = () => {
 // Create a new array of completed todos by filtering the todos array
   const completedTodos = todos.filter((todo) => todo.completed);
 
-// Render the TodoForm, TodoList, and completed todos list
+  // Render the TodoForm, TodoList, and completed todos list
   return (
-    <div className="App">
-      <h1>Todo List</h1>
-      <TodoForm addTodo={handleTodoAdd} />
-      <TodoList
-        todos={todos} // Change 'todo' to 'todos'
-        deleteTodo={handleTodoDelete}
-        completeTodo={handleTodoComplete}
-      />
-      <button onClick={() => setShowCompleted(!showCompleted)}>
-        {showCompleted ? 'Hide' : 'Show'} Completed Todos
-      </button>
-      {showCompleted && (
-        <div>
-          <h2>Completed Todos</h2>
-          <ul>
-            {completedTodos.map((todo) => (
-              <li key={todo.id}>{todo.text}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <h1>Todo List</h1>
+        <TodoForm addTodo={handleTodoAdd} />
+        <TodoList
+          todos={todos} // Change 'todo' to 'todos'
+          deleteTodo={handleTodoDelete}
+          completeTodo={handleTodoComplete}
+        />
+        <button onClick={() => setShowCompleted(!showCompleted)}>
+          {showCompleted ? 'Hide' : 'Show'} Completed Todos
+        </button>
+        {showCompleted && (
+          <div>
+            <h2>Completed Todos</h2>
+            <ul>
+              {completedTodos.map((todo) => (
+                <li key={todo.id}>{todo.text}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <ReactQueryDevtools />
+    </QueryClientProvider >
   );
 };
 
@@ -62,5 +73,3 @@ export default () => (
     <App />
   </TodoProvider>
 );
-
-

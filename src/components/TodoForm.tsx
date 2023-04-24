@@ -8,11 +8,13 @@ import db from '../firebase';
 
 // Define the props interface for the TodoForm component
 interface TodoFormProps {
-    addTodo: (text: string) => void;
+    addTodo: (id: string, 
+              text: string, 
+              completed: boolean) => void;
 }
 
-const TodoForm: React.FC<TodoFormProps> = () => {
-    // Define state to keep track of the user's input text
+const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
+        // Define state to keep track of the user's input text
     const [text, setText] = useState<string>('');
 
     // Define a memoized handleSubmit function using useCallback
@@ -30,12 +32,15 @@ const TodoForm: React.FC<TodoFormProps> = () => {
                     completed: false,
                 });
 
+                // Pass the id, text, and completed properties to the addTodo function
+                addTodo(todoRef.key!, text, false);
+
                 // Clear the input field by resetting the text state
                 setText('');
             }
         },
         // Include the text state variable in the dependency array
-        [text]
+        [addTodo, text]
     );
 
     // Log the user's input text whenever it changes
