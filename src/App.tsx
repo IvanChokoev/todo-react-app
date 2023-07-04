@@ -6,6 +6,9 @@ import { Todo, TodoProvider, useTodoContext } from './components/TodoContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React from 'react';
+import CompletedTodos from './components/CompletedTodos';
+import { Provider } from 'react-redux';
+import { store } from 'store';
 
 // Create a new instance of the QueryClient
 const queryClient = new QueryClient();
@@ -40,6 +43,7 @@ const App = () => {
   // Render the TodoForm, TodoList, and completed todos list
   return (
     <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
       <div className="App">
         <h1>Todo List</h1>
         <TodoForm addTodo={handleTodoAdd} />
@@ -61,7 +65,9 @@ const App = () => {
             </ul>
           </div>
         )}
+        <CompletedTodos /> 
       </div>
+    </Provider>
       <ReactQueryDevtools />
     </QueryClientProvider >
   );

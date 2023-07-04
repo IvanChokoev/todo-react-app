@@ -11,6 +11,16 @@ export interface Todo {
     text: string;
     completed: boolean;
 }
+
+// Define a RootState interface for the entire Redux store
+interface CompletedTodosState {
+    count: number;
+}
+export interface RootState {
+    todos: Todo[];
+    completedTodos: CompletedTodosState;
+}
+
 // Define the props that will be provided by the TodoContext
 interface TodoContextProps {
     todos: Todo[];
